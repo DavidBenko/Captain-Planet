@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'rails', '4.0.0'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'puma', '~> 2.3'
 
 # Web
@@ -43,6 +44,5 @@ group :test do
 end
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'factory_girl_rails', '~> 4.1' # Needs to be in the development group to generate factory files instead of *.yml files
 end
