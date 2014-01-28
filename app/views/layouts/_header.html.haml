@@ -1,0 +1,10 @@
+%header.navbar.navbar-fixed-top.navbar-inverse
+  .navbar-inner
+    .container
+      = link_to t('app.title'), root_path, id: 'logo'
+      %nav
+        %ul.nav.pull-right
+          - unless signed_in?
+            %li= link_to t(:sign_in), sign_in_path
+          - if signed_in?
+            %li= link_to t(:sign_out), sign_out_path, method: :delete

@@ -1,0 +1,10 @@
+ru:
+  alert:
+    error:
+      title: "Ошибка"
+    info:
+      title: "Внимание"
+    success:
+      title: "Успешно"
+  sign_in: "Войти"
+  sign_out: "Выйти"

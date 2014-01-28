@@ -1,0 +1,20 @@
+.row
+  .span8.offset2
+    - e_mail_errors = @session.errors[:e_mail]
+    - password_errors = @session.errors[:password]
+    = form_for @session, html: {class: 'form-horizontal well'} do |f|
+      %legend= t('sessions.new.form_legend')
+      .control-group{class: "#{'error' if e_mail_errors.present? || @authentication_failed}"}
+        = f.label :e_mail, class: 'control-label'
+        .controls
+          = f.text_field :e_mail
+          - if e_mail_errors.present?
+            %span.help-inline= e_mail_errors.first
+      .control-group{class: "#{'error' if password_errors.present? || @authentication_failed}"}
+        = f.label :password, class: 'control-label'
+        .controls
+          = f.password_field :password
+          - if password_errors.present?
+            %span.help-inline= password_errors.first
+      .form-actions
+        = submit_tag t(:sign_in), class: 'btn btn-primary'

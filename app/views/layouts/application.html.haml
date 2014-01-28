@@ -1,0 +1,39 @@
+!!!
+%html
+  %head
+    %title= "#{t('app.subtitle')} - #{t('app.title')}"
+    %meta{name:'viewport', content:'width=device-width, initial-scale=1.0'}
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+    /[if lt IE 9]
+      %script{src: 'http://html5shim.googlecode.com/svn/trunk/html5.js'}
+  %body
+    = render 'layouts/header'
+    .container
+      .row
+        .span8.offset2.alert-container
+          - if flash[:error]
+            .alert.alert-error.animated.fadeInDown
+              %a.close ×
+              %strong= t('alert.error.title')
+              = flash[:error]
+          - elsif flash[:info]
+            .alert.alert-info.animated.fadeInDown
+              %a.close ×
+              %strong= t('alert.info.title')
+              = flash[:info]
+          - elsif flash[:success]
+            .alert.alert-success.animated.fadeInDown
+              %a.close ×
+              %strong= t('alert.success.title')
+              = flash[:success]
+      = yield
+    = render 'layouts/footer'
+    :javascript
+      $(document).ready(function() {
+        $('.alert a.close').on('click', function(event) {
+          $('.alert').removeClass('fadeInDown').addClass('fadeOut');
+        });
+      });
+

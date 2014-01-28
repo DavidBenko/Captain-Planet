@@ -1,0 +1,23 @@
+ru:
+  sessions:
+    new:
+      form_legend: "Вход"
+    create:
+      success: "Добро пожаловать!"
+      error:
+        authentication_failure: "Неверный адрес электронной почты или пароль"
+        wrong_sign_in_data: "Предоставленные данные для входа неверны"
+  activemodel:
+    errors:
+      models:
+        session:
+          attributes:
+            e_mail:
+              blank: "Пожалуйста, введите адрес почты"
+              invalid: "Пожалуйста, введите корректный адрес почты"
+            password:
+              blank: "Пожалуйста, введите пароль"
+    attributes:
+      session:
+        e_mail: "Электронная почта"
+        password: "Пароль"

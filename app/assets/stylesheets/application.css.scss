@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that will be compiled into application.css, which will include all the files
+ * listed below.
+ */
+
+@import "bootswatch/cosmo/variables";
+@import "bootstrap";
+@import "bootstrap-responsive";
+@import "bootswatch/cosmo/bootswatch";
+
+// Application styles
+@import "animate";
+@import "welcome";
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $grayLighter;
+  color: $grayLight;
+  a {
+    color: $gray;
+    &:hover {
+      color: $grayDarker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    margin-right: 5px;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 24px;
+  color: $white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 12px;
+  font-weight: bold;
+  line-height: 1;
+  &:hover {
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.alert-container {
+  height: 100px;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.field_with_errors {
+  display: inline;
+}

@@ -1,0 +1,23 @@
+en:
+  sessions:
+    new:
+      form_legend: "Sign in"
+    create:
+      success: "Welcome!"
+      error:
+        authentication_failure: "Invalid e-mail or password"
+        wrong_sign_in_data: "Wrong sign-in information has been provided"
+  activemodel:
+    errors:
+      models:
+        session:
+          attributes:
+            e_mail:
+              blank: "Please fill in e-mail"
+              invalid: "Please provide valid e-mail address"
+            password:
+              blank: "Please fill in password"
+    attributes:
+      session:
+        e_mail: "E-mail"
+        password: "Password"
