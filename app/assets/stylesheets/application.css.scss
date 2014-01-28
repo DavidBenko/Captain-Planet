@@ -1,12 +1,16 @@
 /*
  * This is a manifest file that will be compiled into application.css, which will include all the files
  * listed below.
+ *
+ *
+ * Yeti theme by bootswatch
+ * http://bootswatch.com/yeti/
  */
 
-@import "bootswatch/cosmo/variables";
+@import "yeti/variables";
 @import "bootstrap";
 @import "bootstrap-responsive";
-@import "bootswatch/cosmo/bootswatch";
+@import "yeti/yeti";
 
 // Application styles
 @import "animate";

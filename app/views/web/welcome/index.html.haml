@@ -1,3 +1,8 @@
-.center.hero-unit
+#container
+  -if Rails.env.development?
+    = stylesheet_link_tag 'application.css', debug: true
+  -else
+    = stylesheet_link_tag asset_url('application.css'), debug: false
+  .center.hero-unit
     %h1= t('app.title')
     %h2= t('app.subtitle')

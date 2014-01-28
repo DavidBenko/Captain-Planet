@@ -8,12 +8,11 @@ gem 'puma', '~> 2.3'
 # Web
 gem 'jquery-rails', '~> 3.0'
 gem 'haml', '~> 4.0'
-gem 'bootswatch-rails'
+#gem 'bootswatch-rails'
 gem 'bootstrap-sass', '~> 2.3.2'
 gem 'sass-rails',   '~> 4.0'
 gem 'coffee-rails', '~> 4.0'
 gem 'uglifier'
-
 # Models
 gem 'state_machine'
 
