@@ -8,12 +8,6 @@ class ApplicationController < ActionController::Base
 
   private
   def set_locale
-    if Rails.env.development?
-      I18n.locale = :en
-    else
-      preferred_locale = preferred_language_from I18n.available_locales
-      I18n.locale = preferred_locale || I18n.default_locale
-    end
-    logger.debug "Using locale: #{I18n.locale}"
+    I18n.locale = I18n.default_locale
   end
 end
