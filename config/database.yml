@@ -1,10 +1,12 @@
 development:
   adapter: postgresql
   encoding: utf-8
-  database: rails4_template
   pool: 5
-  username: dev
-  password: dev
+  database: ENV['DATABASE_NAME']
+  host: ENV['DATABASE_HOST']
+  username: ENV['DATABASE_USER_NAME']
+  password: ENV['DATABASE_PASSWORD']
+  port: ENV['DATABASE_PORT']
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,7 +20,9 @@ test:
 production:
   adapter: postgresql
   encoding: utf-8
-  database: rails4_template
   pool: 5
-  username: please_create_user
-  password: please_create_good_password
+  database: ENV['DATABASE_NAME']
+  host: ENV['DATABASE_HOST']
+  username: ENV['DATABASE_USER_NAME']
+  password: ENV['DATABASE_PASSWORD']
+  port: ENV['DATABASE_PORT']
