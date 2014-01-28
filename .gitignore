@@ -19,3 +19,4 @@ pickle-email-*.html
 .idea/*
 .DS_Store
 .env
+/public/assets/*
