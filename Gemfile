@@ -10,14 +10,20 @@ gem 'jquery-rails', '~> 3.0'
 gem 'haml', '~> 4.0'
 gem 'bootstrap-sass', '~> 2.3.2'
 gem 'sass-rails',   '~> 4.0'
+gem 'bootswatch-rails'
 gem 'coffee-rails', '~> 4.0'
 gem 'uglifier'
+
 # Models
 gem 'state_machine'
 
 # DB
 gem 'pg'
 gem 'foreigner'
+
+# Auth
+gem 'devise'
+gem 'cancan'
 
 # Utils
 gem 'magic_encoding'
@@ -28,7 +34,7 @@ gem 'http_accept_language'
 gem 'rails_12factor', group: :production
 
 group :development do
-  gem 'annotate', '>= 2.5.0'
+  gem 'annotate'
   gem 'haml-rails', '~> 0.4'
 end
 
@@ -39,8 +45,4 @@ group :test do
   gem 'minitest-reporters', '>= 0.5.0'
   gem 'minitest-spec-rails', '~> 4.7'
   gem 'minitest-capybara', '~> 0.4'
-end
-
-group :development, :test do
-  gem 'factory_girl_rails', '~> 4.1' # Needs to be in the development group to generate factory files instead of *.yml files
 end

@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
   include ApplicationHelper
-  include SessionsHelper
   include HttpAcceptLanguage
   protect_from_forgery
   before_filter :set_locale
