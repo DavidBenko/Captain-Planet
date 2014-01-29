@@ -28,6 +28,7 @@ module EIA
     include HTTParty
     self.base_uri 'api.eia.gov'
     include ApiFormats
+    attr_reader :response_body
   end
 
   class EIACategory < EIABase
@@ -35,7 +36,6 @@ module EIA
     attr_accessor :category_id
     attr_accessor :parent_category_id
     attr_accessor :notes
-    attr_reader :response_body
 
     @name = '' if @name.blank?
     @category_id = -1 if @category_id.blank?
@@ -103,7 +103,6 @@ module EIA
     attr_accessor :start
     attr_accessor :end
     attr_accessor :data
-    attr_reader :response_body
 
     @name = '' if @name.blank?
     @series_id = -1 if @series_id.blank?

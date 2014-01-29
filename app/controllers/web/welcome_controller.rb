@@ -2,8 +2,23 @@
 module Web
   class WelcomeController < Web::ControllerBase
     def index
-      #hes = HomeEnergyScore::HomeEnergyScore.new
-      #p hes.list_operations.inspect
+      #########
+      # Running API Tests
+      p 'Running API Tests'
+      p '---'
+      p 'Home Energy Score (SOAP)'
+      hes = HomeEnergyScore::HomeEnergyScore.new
+      p 'Operations List:'
+      p hes.list_operations.inspect
+      p '---'
+      p 'EIA (JSON REST)'
+      test = EIA::SEDS.new
+      test.sync_with_server
+      p 'Synced Object:'
+      p test.inspect
+      p 'Child Categories: '
+      p test.get_child_categories.inspect
+      p '---'
     end
   end
 end
