@@ -14,6 +14,10 @@ gem 'bootswatch-rails'
 gem 'coffee-rails', '~> 4.0'
 gem 'uglifier'
 
+# Web Service
+gem 'savon', '~> 2.3.3'
+gem 'httparty'
+
 # Models
 gem 'state_machine'
 
