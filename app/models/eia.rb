@@ -12,24 +12,25 @@ module EIA
   #
 
   module ApiFormats
-    include HTTParty
-    base_uri 'api.eia.gov'
     def get_categories(category_id=nil, options={})
-      return category_id if category_id.nil?
       params = {:category_id => category_id, :out => 'json', :api_key => ENV['EIA_API_KEY']}
       options.merge!({:query => HashWithIndifferentAccess.new(params)})
       self.class.get('/category', options)
     end
     def get_series(series_id=nil, options={})
-      return series_id if series_id.nil?
       params = {:series_id => series_id, :out => 'json', :api_key => ENV['EIA_API_KEY']}
       options.merge!({:query => HashWithIndifferentAccess.new(params)})
       self.class.get('/series', options)
     end
   end
 
-  class EIACategory
+  class EIABase
+    include HTTParty
+    self.base_uri 'api.eia.gov'
     include ApiFormats
+  end
+
+  class EIACategory < EIABase
     attr_accessor :name
     attr_accessor :category_id
     attr_accessor :parent_category_id
@@ -48,12 +49,14 @@ module EIA
       body = retrieve_object(force)
       attrs = body[:category]
       @name = attrs[:name]
+      @parent_category_id = attrs[:parent_category_id]
+      @notes = attrs[:notes]
     end
 
     # Returns array of EIA::EIACategory objects
     def get_child_categories
       ret = []
-      body = retrieve_object
+      body = HashWithIndifferentAccess.new(get_categories(@category_id, {}))#retrieve_object
       cats = body[:category]
       children = cats[:childcategories]
       children.each { |child|
@@ -85,7 +88,6 @@ module EIA
   end
 
   class EIASeries
-    include ApiFormats
     attr_accessor :name
     attr_accessor :series_id
     attr_accessor :f
