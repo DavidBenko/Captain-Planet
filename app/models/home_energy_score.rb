@@ -32,11 +32,23 @@ module HomeEnergyScore
       :corrected => 'corrected'
   }
 
+
   def self.assessment_types
     @@assessment_types
   end
 
+  module HESKeys
+    def user_key
+      ENV['HOME_ENERGY_SCORE_USER_KEY']
+    end
+
+    def qualified_assessor_id
+      ENV['HOME_ENERGY_SCORE_QAID']
+    end
+  end
+
   class HomeEnergyScore
+    include HESKeys
     extend Savon::Model
     client wsdl: 'http://trk-hesapici-sb.hescloud.net/st_api/wsdl'
 
@@ -54,8 +66,8 @@ module HomeEnergyScore
     def submit_address(address='', city='', state='', zip_code='', assessment_type='')
       params = {
           'building_address' => {
-            'user_key' => ENV['HOME_ENERGY_SCORE_USER_KEY'],
-            'qualified_assessor_id' => ENV['HOME_ENERGY_SCORE_QAID'],
+            'user_key' => user_key,
+            'qualified_assessor_id' => qualified_assessor_id,
             'address' => address,
             'city' => city,
             'state' => state,
