@@ -6,6 +6,10 @@ module Web
       # Running API Tests
       p 'Running API Tests'
       p '---'
+      p 'Green Button'
+      gb = GreenButton::DataCustodian::ApplicationInformation.new
+      p GreenButton::DataCustodian::ApplicationInformation.all.inspect
+      p '---'
       p 'Home Energy Score (SOAP)'
       hes = HomeEnergyScore::HomeEnergyScore.new
       p 'Operations List:'
