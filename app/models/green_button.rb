@@ -1,3 +1,14 @@
+#
+# A set of RESTful API methods and an XML data standard allowing consumers to access
+# their energy usage data and securely share that data with third-party web and mobile apps.
+# Today, 48 utilities and electricity suppliers have committed to enable their customers
+# with "Green Button" access. Over 42 million household and business customers
+# (reaching well over 100 million Americans) already have access to their Green Button
+# energy data.
+#
+# api docs: http://energyos.github.io/OpenESPI-GreenButton-API-Documentation/API/#!/DataCustodian.ElectricPowerQualitySummary
+#
+
 module GreenButton
   class GBBase
     include HTTParty
