@@ -12,7 +12,6 @@
 module GreenButton
   class GBBase
     include HTTParty
-    include ApiFormats
     format :xml
   end
   module DataCustodian
