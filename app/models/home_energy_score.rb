@@ -32,9 +32,18 @@ module HomeEnergyScore
       :corrected => 'corrected'
   }
 
+  @@result_statuses= {
+      :ok => 'OK',
+      :fail => 'FAIL'
+  }
+
 
   def self.assessment_types
     @@assessment_types
+  end
+
+  def self.result_statuses
+    @@result_statuses
   end
 
   module HESKeys
@@ -58,11 +67,17 @@ module HomeEnergyScore
                :retrieve_buildings_by_id, :delete_buildings_by_id, :archive_buildings_by_id,
                :retrieve_buildings_by_address, :validate_inputs
 
+    # List available SOAP operations
     def list_operations
       client.operations
     end
 
-    # Creates a new building
+    #
+    # Note: the params hashes need literal string keys (no symbols)
+    # for some reason, Savon changes underscore case to camel case for the xml keys
+    #
+
+    # Takes an address and creates a default building.
     def submit_address(address='', city='', state='', zip_code='', assessment_type='')
       params = {
           'building_address' => {
@@ -75,8 +90,50 @@ module HomeEnergyScore
             'assessment_type' => assessment_type
           }
       }
-      super(message: params)
+      result = super(message: params).body[:submit_addressResponse][:submit_address_result]
+      bldg = Building.new
+      bldg.building_id = result[:building_id]
+      [bldg]
     end
 
+    # Modifies or submits inputs for a created building (by submit_address).
+    # Note that all inputs do not need to be complete until the calculation step,
+    # one can submit and modify multiple times.
+    def submit_inputs(building_id,about={},zone={},systems={})
+      params = {
+          'building' => {
+              'user_key' => user_key,
+              'building_id' => building_id,
+              'about' => about,
+              'zone' => zone,
+              'systems' => systems
+          }.delete_if{|key, value| value.is_a?(Hash) && value.empty? }
+      }
+      result = super(message: params).body[:submit_inputsResponse][:submit_inputs_result]
+      result[:result]
+    end
+
+    # This XSD handles the two calculation methods, which have similar submits.
+    # calc_base_building() does the energy calculation the current submitted
+    # inputs for the building. calc_package_building does the same for the
+    # several upgrade runs and assembled the selected upgrades into the a "package"
+    # building that combines the recommended upgrades and presents both consumption
+    # for that configuration and savings compared to base.
+    def calculate(building_id, validates_inputs=true)
+      params = {
+          'building' => {
+              'user_key' => user_key,
+              'building_id' => building_id,
+              'validates_inputs' => (validates_inputs ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
   end
+
+  class Building
+    attr_accessor :building_id
+  end
+
 end
