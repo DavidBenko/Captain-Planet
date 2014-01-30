@@ -19,6 +19,9 @@ module Web
       p 'Child Categories: '
       p test.get_child_categories.inspect
       p '---'
+      p 'BP'
+      bldgper = BuildingPerformance.new
+      p bldgper.peers.inspect
     end
   end
 end
