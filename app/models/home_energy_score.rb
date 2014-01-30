@@ -121,10 +121,171 @@ module HomeEnergyScore
     # for that configuration and savings compared to base.
     def calculate(building_id, validates_inputs=true)
       params = {
-          'building' => {
+          'building_info' => {
               'user_key' => user_key,
               'building_id' => building_id,
               'validates_inputs' => (validates_inputs ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Finalizes the model inputs configuration of a created building assessment.
+    def commit_results(building_id)
+      params = {
+          'building_info' => {
+              'user_key' => user_key,
+              'building_id' => building_id
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Inititates the label generation (PDF document) for a successfully calculated
+    # home scoring assessment.
+    def generate_label(building_id, force_regenerate=true)
+      params = {
+          'building_label' => {
+              'user_key' => user_key,
+              'building_id' => building_id,
+              'force_regenerate' => (force_regenerate ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns a list of the submitted inputs for an already created building assessment.
+    def retrieve_inputs(building_id, period_type, period_number, resource_type, end_use)
+      # todo restrict the inputs here
+      params = {
+          'retrieve_in' => {
+              'building_id' => building_id,
+              'period_type' => period_type,
+              'period_number' => period_number,
+              'resource_type' => resource_type,
+              'end_use' => end_use
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns a list of the submitted inputs for an already created building assessment.
+    # This method has a fucking ton of params... like wtf
+    # method doc: http://documentation.hescloud.net/api/st/xsd/hes-st_xsd-retrieve-label-results_sb.html
+    def retrieve_label_results(label_result={})
+      # todo I dont think this is implemented right
+      params = {
+          'label_result' => label_result
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns an extended list of additional results in addition to the official Label results
+    # returned by retrieve_label_results().
+    def retrieve_extended_results(extended_result={})
+      # todo I dont think this is implemented right
+      params = {
+          'extended_result' => extended_result
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns the full set of Scoring Tool building energy calculation results.
+    def retrieve(building_id, period_type, period_number, resource_type, end_use)
+      # todo restrict the inputs here
+      params = {
+          'retrieve_in' => {
+              'building_id' => building_id,
+              'period_type' => period_type,
+              'period_number' => period_number,
+              'resource_type' => resource_type,
+              'end_use' => end_use
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns the list upgrade recommendations included in the Package Buildings as
+    # determined by calculate_package_building().
+    def retrieve_recommendations
+      # todo another retrieve
+      # http://documentation.hescloud.net/api/st/xsd/hes-st_xsd-retrieve-recommendations_sb.html
+    end
+
+    # Returns a list of buildings for a specified Qualified Assessor (QA) number.
+    def retrieve_buildings_by_id(limit,offset,archive=false)
+      params = {
+          'buildings_by_id' => {
+              'user_key' => user_key,
+              'qualified_assessor_id' => qualified_assessor_id,
+              'rows_per_page' => limit,
+              'page_number' => offset,
+              'archive' => (archive ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Removes one or more specified buildings from the user's list of home assessments in the database.
+    def delete_buildings_by_id(buildings=[])
+      building_ids = Building.delimited_ids(buildings)
+      params = {
+          'delete_buildings_by_id' => {
+              'user_key' => user_key,
+              'qualified_assessor_id' => qualified_assessor_id,
+              'buildings' => building_ids
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Tags one or more home assessments in the database as being archived.
+    def archive_buildings_by_id(buildings=[], archive=false)
+      building_ids = Building.delimited_ids(buildings)
+      params = {
+          'archive_buildings_by_id' => {
+              'user_key' => user_key,
+              'qualified_assessor_id' => qualified_assessor_id,
+              'buildings' => building_ids,
+              'archive' => (archive ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Returns the "Assessment Date" and the "Location" information for a specified address.
+    def retrieve_buildings_by_address(query_field,query_text,limit,offset,archive=false)
+      params = {
+          'buildings_by_address' => {
+              'user_key' => user_key,
+              'qualified_assessor_id' => qualified_assessor_id,
+              'query_field' => query_field,
+              'query_text' => query_text,
+              'rows_per_page' => limit,
+              'page_number' => offset,
+              'archive' => (archive ? 1 : 0)
+          }
+      }
+      # todo parse this
+      super(message: params).body
+    end
+
+    # Basic categorical level input validation.
+    def validate_inputs(building_id)
+      params = {
+          'validate_inputs' => {
+              'user_key' => user_key,
+              'building_id' => building_id
           }
       }
       # todo parse this
@@ -134,6 +295,15 @@ module HomeEnergyScore
 
   class Building
     attr_accessor :building_id
+    def self.delimited_ids(buildings=[])
+      # Change HomeEnergyScore::Building into pipe-delimited id string
+      buildings.map{|x| x.building_id}.join('|')
+    end
+  end
+
+  class File
+    attr_accessor :type
+    attr_accessor :url
   end
 
 end
